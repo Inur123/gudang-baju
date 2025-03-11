@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SizeController;
 use App\Http\Controllers\ClothesController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
@@ -25,3 +26,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 // Route untuk clothes
 Route::resource('clothes', ClothesController::class);
+
+// Route untuk sizes
+Route::resource('sizes', SizeController::class);
+

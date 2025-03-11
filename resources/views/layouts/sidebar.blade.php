@@ -49,12 +49,11 @@
                     Baju
                 </a>
             </li>
-
-
             <li>
-                <a href="#"
-                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-gray-700 hover:bg-pink-50 transition-colors">
-                    <i class="ri-ruler-line text-purple-500"></i>
+                <a href="{{ route('sizes.index') }}"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors
+                    {{ Request::is('sizes*') ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white font-medium shadow-lg scale-105' : 'text-gray-700 hover:bg-pink-50' }}">
+                    <i class="ri-ruler-line"></i>
                     Sizes
                 </a>
             </li>
@@ -132,16 +131,15 @@
                     Baju
                 </a>
             </li>
-
-
-
             <li>
-                <a href="#"
-                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-gray-700 hover:bg-pink-50 transition-colors">
-                    <i class="ri-ruler-line text-purple-500"></i>
+                <a href="{{ route('sizes.index') }}"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-300
+                    {{ Request::is('sizes*') ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white font-medium shadow-lg scale-105' : 'text-gray-700 bg-transparent hover:bg-pink-50' }}">
+                    <i class="ri-ruler-line"></i>
                     Sizes
                 </a>
             </li>
+
             <li>
                 <a href="#"
                     class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-gray-700 hover:bg-pink-50 transition-colors">
