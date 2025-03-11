@@ -21,30 +21,9 @@
                 </a>
             </li>
             <li>
-                <a href="#"
-                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-gray-700 hover:bg-pink-50 transition-colors">
-                    <i class="ri-archive-line text-pink-500"></i>
-                    Inventory
-                </a>
-            </li>
-            <li>
-                <a href="#"
-                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-gray-700 hover:bg-pink-50 transition-colors">
-                    <i class="ri-inbox-archive-line text-green-500"></i>
-                    Incoming Items
-                </a>
-            </li>
-            <li>
-                <a href="#"
-                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-gray-700 hover:bg-pink-50 transition-colors">
-                    <i class="ri-inbox-unarchive-line text-orange-500"></i>
-                    Outgoing Items
-                </a>
-            </li>
-            <li>
                 <a href="{{ route('clothes.index') }}"
                     class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors
-                {{ Request::is('clothes*') ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white font-medium shadow-lg scale-105' : 'text-gray-700 hover:bg-pink-50' }}">
+                    {{ Request::is('clothes', 'clothes/*') ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white font-medium shadow-lg scale-105' : 'text-gray-700 hover:bg-pink-50' }}">
                     <i class="ri-t-shirt-line"></i>
                     Baju
                 </a>
@@ -103,30 +82,9 @@
                 </a>
             </li>
             <li>
-                <a href="#"
-                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-gray-700 hover:bg-pink-50 transition-colors">
-                    <i class="ri-archive-line text-pink-500"></i>
-                    Inventory
-                </a>
-            </li>
-            <li>
-                <a href="#"
-                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-gray-700 hover:bg-pink-50 transition-colors">
-                    <i class="ri-inbox-archive-line text-green-500"></i>
-                    Incoming Items
-                </a>
-            </li>
-            <li>
-                <a href="#"
-                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-gray-700 hover:bg-pink-50 transition-colors">
-                    <i class="ri-inbox-unarchive-line text-orange-500"></i>
-                    Outgoing Items
-                </a>
-            </li>
-            <li>
                 <a href="{{ route('clothes.index') }}"
                     class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-300
-                {{ Request::is('clothes*') ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white font-medium shadow-lg scale-105' : 'text-gray-700 bg-transparent hover:bg-pink-50' }}">
+                {{ Request::is('clothes', 'clothes/*') ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white font-medium shadow-lg scale-105' : 'text-gray-700 bg-transparent hover:bg-pink-50' }}">
                     <i class="ri-t-shirt-line"></i>
                     Baju
                 </a>

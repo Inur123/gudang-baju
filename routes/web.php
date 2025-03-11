@@ -5,6 +5,7 @@ use App\Http\Controllers\SizeController;
 use App\Http\Controllers\ClothesController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ClothesSizeController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -29,4 +30,6 @@ Route::resource('clothes', ClothesController::class);
 
 // Route untuk sizes
 Route::resource('sizes', SizeController::class);
+
+
 
