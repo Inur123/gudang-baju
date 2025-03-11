@@ -1,22 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="mb-6 mt-10 md:mt-0">
+<div class="mb-6 mt-10 md:mt-0 pt-5">
 
-    <h2 class="text-2xl font-bold text-gray-800 pt-5">Warehouse Dashboard</h2>
+    <h2 class="text-2xl font-bold text-gray-800 ">Warehouse Dashboard</h2>
     <p class="text-gray-600">Welcome back! Here's what's happening today.</p>
-  </div>
+</div>
 
   <!-- Stats Cards -->
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
     <div class="bg-white rounded-xl shadow-sm border border-pink-100 p-4">
       <div class="flex items-center justify-between">
         <div>
-          <p class="text-sm text-gray-500">Total Items</p>
-          <p class="text-2xl font-bold text-gray-800">1,254</p>
+          <p class="text-sm text-gray-500">Total Baju</p>
+          <p class="text-2xl font-bold text-gray-800">{{ $totalClothes }}</p>
         </div>
         <div class="h-12 w-12 bg-pink-100 rounded-lg flex items-center justify-center">
-          <i class="ri-shopping-bag-line text-pink-500 text-xl"></i>
+          <i class="ri-t-shirt-line text-pink-500 text-xl"></i>
         </div>
       </div>
       <div class="mt-2 flex items-center text-xs text-green-600">

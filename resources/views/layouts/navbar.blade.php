@@ -55,28 +55,4 @@
     </div>
 </header>
 
-<!-- Mobile Navigation - Fixed below header -->
-<div class="fixed top-[56px] left-0 right-0 z-30 md:hidden bg-white border-b border-pink-100 shadow-sm">
-    <div class="flex overflow-x-auto p-2 gap-2 no-scrollbar">
-        <a href="#"
-            class="flex items-center gap-2 px-3 py-2 rounded-lg bg-gradient-to-r from-pink-500 to-purple-600 text-white font-medium whitespace-nowrap">
-            <i class="ri-bar-chart-2-line"></i>
-            Dashboard
-        </a>
-        <a href="#"
-            class="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-700 hover:bg-pink-50 transition-colors whitespace-nowrap">
-            <i class="ri-archive-line text-pink-500"></i>
-            Inventory
-        </a>
-        <a href="#"
-            class="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-700 hover:bg-pink-50 transition-colors whitespace-nowrap">
-            <i class="ri-inbox-archive-line text-green-500"></i>
-            Incoming
-        </a>
-        <a href="#"
-            class="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-700 hover:bg-pink-50 transition-colors whitespace-nowrap">
-            <i class="ri-inbox-unarchive-line text-orange-500"></i>
-            Outgoing
-        </a>
-    </div>
-</div>
+

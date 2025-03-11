@@ -6,6 +6,7 @@
   <title>ummi.collection - Warehouse Dashboard</title>
   @vite('resources/css/app.css')
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -81,6 +82,7 @@
       </main>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- JavaScript for Hamburger Menu, Close Button, and User Dropdown Toggle -->
     <script>
       document.addEventListener('DOMContentLoaded', function() {

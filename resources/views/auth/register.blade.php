@@ -65,18 +65,32 @@
                             placeholder="Enter your email" required value="{{ old('email') }}">
                     </div>
 
-                    <div class="mb-4">
+                    <div class="mb-4 relative">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                        <input type="password" name="password"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-                            placeholder="Enter your password" required>
+                        <div class="relative">
+                            <input type="password" name="password" id="password"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 pr-10"
+                                placeholder="Enter your password" required>
+                            <!-- Icon Eye untuk Password -->
+                            <button type="button" onclick="togglePasswordVisibility('password', 'eye-icon-password')"
+                                class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-700 focus:outline-none">
+                                <i id="eye-icon-password" class="ri-eye-line"></i>
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="mb-6">
+                    <div class="mb-6 relative">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
-                        <input type="password" name="password_confirmation"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-                            placeholder="Confirm your password" required>
+                        <div class="relative">
+                            <input type="password" name="password_confirmation" id="confirm-password"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 pr-10"
+                                placeholder="Confirm your password" required>
+                            <!-- Icon Eye untuk Confirm Password -->
+                            <button type="button" onclick="togglePasswordVisibility('confirm-password', 'eye-icon-confirm-password')"
+                                class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-700 focus:outline-none">
+                                <i id="eye-icon-confirm-password" class="ri-eye-line"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <button type="submit"
@@ -93,7 +107,7 @@
         </div>
 
         <div class="mt-6 text-center text-sm text-gray-500">
-            <p>© 2025 FashionStock. All rights reserved.</p>
+            <p>© {{ date('Y') }} ummi.collection. All rights reserved.</p>
         </div>
     </div>
 </body>
@@ -118,6 +132,22 @@
             }, 2000);
         }
     });
+</script>
+<script>
+    function togglePasswordVisibility(inputId, iconId) {
+        const passwordInput = document.getElementById(inputId);
+        const eyeIcon = document.getElementById(iconId);
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text'; // Tampilkan password
+            eyeIcon.classList.remove('ri-eye-line');
+            eyeIcon.classList.add('ri-eye-off-line'); // Ganti icon menjadi eye-off
+        } else {
+            passwordInput.type = 'password'; // Sembunyikan password
+            eyeIcon.classList.remove('ri-eye-off-line');
+            eyeIcon.classList.add('ri-eye-line'); // Ganti icon menjadi eye
+        }
+    }
 </script>
 
 </html>

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ClothesController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 
@@ -21,3 +22,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Route untuk dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+// Route untuk clothes
+Route::resource('clothes', ClothesController::class);
