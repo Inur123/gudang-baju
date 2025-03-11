@@ -2,7 +2,8 @@
 
 @section('content')
 <div class="mb-6 mt-10 md:mt-0">
-    <h2 class="text-2xl font-bold text-gray-800">Warehouse Dashboard</h2>
+
+    <h2 class="text-2xl font-bold text-gray-800 pt-5">Warehouse Dashboard</h2>
     <p class="text-gray-600">Welcome back! Here's what's happening today.</p>
   </div>
 
@@ -518,4 +519,7 @@
       }
     });
   </script>
+<script>
+
+</script>
 @endsection

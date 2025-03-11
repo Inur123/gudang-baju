@@ -4,7 +4,7 @@
     <div class="p-4 border-b border-pink-100">
       <div class="flex items-center gap-2">
         <i class="ri-shopping-bag-line text-pink-500 text-xl"></i>
-        <h1 class="text-xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 text-transparent bg-clip-text">FashionStock</h1>
+        <h1 class="text-xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 text-transparent bg-clip-text">ummi.collection</h1>
       </div>
     </div>
 
