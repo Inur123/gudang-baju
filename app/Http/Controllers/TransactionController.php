@@ -8,16 +8,24 @@ use App\Models\Clothes;
 use App\Models\Size;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class TransactionController extends Controller
 {
-    // Menampilkan semua transaksi
     public function index()
     {
-        // Ambil data transaksi dengan relasi details, clothes, dan size
-        $transactions = Transaction::with(['details.clothes', 'details.size'])->paginate(10); // Sesuaikan jumlah pagination
-        return view('transactions.index', compact('transactions'));
+        // Ambil transaksi dengan relasi details
+        $transactions = Transaction::with(['details.clothes', 'details.size'])
+            ->paginate(10); // Sesuaikan jumlah pagination
+
+        // Hitung total barang dari semua transaksi
+        $totalItems = $transactions->sum(function ($transaction) {
+            return $transaction->details->sum('quantity');
+        });
+
+        return view('transactions.index', compact('transactions', 'totalItems'));
     }
+
 
 
     // Menampilkan form untuk membuat transaksi baru
@@ -43,9 +51,6 @@ class TransactionController extends Controller
             'quantity' => 'required|array',
             'quantity.*' => 'array', // Each clothes has an array of quantities
             'quantity.*.*' => 'integer|min:1', // Each quantity must be valid
-            'custom_size' => 'nullable|array', // Custom size (optional)
-            'custom_size.*' => 'nullable|array', // Each clothes has an array of custom sizes
-            'custom_size.*.*' => 'nullable|string', // Each custom size must be string (if provided)
         ]);
 
         // Validate: Check for duplicate clothes in one transaction
@@ -53,10 +58,11 @@ class TransactionController extends Controller
             return redirect()->back()->withErrors(['clothes_id' => 'Each clothes item can only be selected once in a transaction.'])->withInput();
         }
 
-        // Save transaction
+        // Save transaction with explicit created_at
         $transaction = Transaction::create([
             'description' => $request->description,
             'type' => $request->type,
+            'created_at' => Carbon::now(), // Set waktu sekarang
         ]);
 
         // Save transaction details
@@ -77,23 +83,14 @@ class TransactionController extends Controller
                 // Get quantity for this size
                 $quantity = $request->quantity[$index][$sizeIndex] ?? 1;
 
-                // Check if size is custom
-                $size = Size::find($sizeId);
-                $isCustom = $size ? $size->is_custom : false;
-                $customSize = null;
-
-                // Get custom size value if the size is custom
-                if ($isCustom && isset($request->custom_size[$index][$sizeIndex])) {
-                    $customSize = $request->custom_size[$index][$sizeIndex];
-                }
-
-                // Save transaction detail
+                // Save transaction detail with explicit created_at
                 TransactionDetail::create([
                     'transaction_id' => $transaction->id,
                     'clothes_id' => $clothesId,
                     'size_id' => $sizeId,
                     'quantity' => $quantity,
-                    'custom_size' => $customSize,
+                    'custom_size' => null, // No custom size input needed
+                    'created_at' => Carbon::now(), // Set waktu sekarang
                 ]);
 
                 // Add size to used sizes list
@@ -104,13 +101,19 @@ class TransactionController extends Controller
         return redirect()->route('transactions.index')->with('success', 'Transaction created successfully.');
     }
 
+
     // Menampilkan detail transaksi
     public function show(Transaction $transaction)
     {
         // Load the details relationship with clothes and size
         $transaction->load('details.clothes', 'details.size');
-        return view('transactions.show', compact('transaction'));
+
+        // Hitung total quantity semua barang
+        $totalQuantity = $transaction->details->sum('quantity');
+
+        return view('transactions.show', compact('transaction', 'totalQuantity'));
     }
+
 
 
     public function edit(Transaction $transaction)
@@ -140,9 +143,6 @@ class TransactionController extends Controller
             'quantity' => 'required|array',
             'quantity.*' => 'array', // Setiap clothes memiliki array quantities
             'quantity.*.*' => 'integer|min:1', // Setiap quantity harus valid
-            'custom_size' => 'nullable|array', // Custom size (opsional)
-            'custom_size.*' => 'nullable|array', // Setiap clothes memiliki array custom sizes
-            'custom_size.*.*' => 'nullable|string', // Setiap custom size harus string (jika ada)
         ]);
 
         // Validasi: Cek duplikat clothes dalam satu transaksi
@@ -181,23 +181,13 @@ class TransactionController extends Controller
                     // Ambil quantity untuk size ini
                     $quantity = isset($request->quantity[$index][$sizeIndex]) ? (int)$request->quantity[$index][$sizeIndex] : 1;
 
-                    // Cek apakah size adalah custom
-                    $size = Size::find($sizeId);
-                    $isCustom = $size ? $size->is_custom : false;
-                    $customSize = null;
-
-                    // Ambil nilai custom size jika size adalah custom
-                    if ($isCustom && isset($request->custom_size[$index][$sizeIndex])) {
-                        $customSize = $request->custom_size[$index][$sizeIndex];
-                    }
-
                     // Simpan detail transaksi
                     TransactionDetail::create([
                         'transaction_id' => $transaction->id,
                         'clothes_id' => $clothesId,
                         'size_id' => $sizeId,
                         'quantity' => $quantity,
-                        'custom_size' => $customSize,
+                        'custom_size' => null, // No custom size input needed
                     ]);
 
                     // Tambahkan size ke daftar size yang sudah digunakan

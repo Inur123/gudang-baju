@@ -69,7 +69,6 @@
                                                     <option value="">Select Size</option>
                                                     @foreach ($sizes->where('label', $detail->clothes->label) as $size)
                                                         <option value="{{ $size->id }}"
-                                                            data-is-custom="{{ $size->is_custom ? 'true' : 'false' }}"
                                                             {{ $detail->size_id == $size->id ? 'selected' : '' }}>
                                                             {{ $size->name }}
                                                         </option>
@@ -85,15 +84,6 @@
                                                     class="quantity-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 appearance-none"
                                                     placeholder="Enter quantity" required>
                                             </div>
-                                        </div>
-                                        <!-- Input Custom Size -->
-                                        <div class="custom-size-input mt-4" style="{{ $detail->size->is_custom ? 'display:block' : 'display:none' }}">
-                                            <label for="custom_size" class="block text-sm font-medium text-gray-700 mb-2">Custom
-                                                Size</label>
-                                            <input type="text" name="custom_size[{{ $bajuIndex }}][]"
-                                                value="{{ $detail->custom_size }}"
-                                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-                                                placeholder="Enter custom size">
                                         </div>
                                         <!-- Tombol Hapus Ukuran -->
                                         <div class="mt-2 text-right">
@@ -209,7 +199,6 @@
                 populateSizeDropdown(target);
             } else if (target.classList.contains('size-select')) {
                 updateAvailableSizes(target);
-                toggleCustomSizeInput(target);
             } else if (target.classList.contains('quantity-input')) {
                 updateTotalQuantity();
             }
@@ -310,7 +299,7 @@
 
             filteredSizes.forEach(size => {
                 sizeSelect.insertAdjacentHTML('beforeend', `
-                    <option value="${size.id}" data-is-custom="${size.is_custom ? 'true' : 'false'}">${size.name}</option>
+                    <option value="${size.id}">${size.name}</option>
                 `);
             });
 
@@ -319,7 +308,6 @@
             }
 
             updateAvailableSizes(sizeSelect);
-            toggleCustomSizeInput(sizeSelect);
         });
     }
 
@@ -339,20 +327,6 @@
         });
     }
 
-    // Toggle custom size input
-    function toggleCustomSizeInput(sizeSelect) {
-        const isCustom = sizeSelect.options[sizeSelect.selectedIndex]?.getAttribute('data-is-custom') === 'true';
-        const customSizeInput = sizeSelect.closest('.ukuran-row').querySelector('.custom-size-input');
-
-        if (customSizeInput) {
-            customSizeInput.style.display = isCustom ? 'block' : 'none';
-            const customSizeField = customSizeInput.querySelector('input');
-            if (customSizeField) {
-                customSizeField.required = isCustom;
-            }
-        }
-    }
-
     // Add a new baju row
     function addBajuRow() {
         rowCounter++;
@@ -368,7 +342,7 @@
         bajuTemplate.querySelectorAll('select, input').forEach(field => {
             if (field.name && field.name.includes('[')) {
                 const baseName = field.name.split('[')[0];
-                if (['size_id', 'quantity', 'custom_size'].includes(baseName)) {
+                if (['size_id', 'quantity'].includes(baseName)) {
                     field.name = `${baseName}[${rowCounter}][]`;
                     field.value = '';
                 }
@@ -376,18 +350,6 @@
                 field.value = '';
             }
         });
-
-        // Reset custom size visibility
-        const customSizeInput = firstUkuranRow.querySelector('.custom-size-input');
-        if (customSizeInput) {
-            customSizeInput.style.display = 'none';
-            const customSizeField = customSizeInput.querySelector('input');
-            if (customSizeField) {
-                customSizeField.value = '';
-                customSizeField.name = `custom_size[${rowCounter}][]`;
-                customSizeField.required = false;
-            }
-        }
 
         // Add to container
         document.getElementById('detail-transaksi').appendChild(bajuTemplate);
@@ -412,15 +374,8 @@
             } else if (field.classList.contains('quantity-input')) {
                 field.name = `quantity[${bajuIndex}][]`;
                 field.value = '';
-            } else if (field.name && field.name.includes('custom_size')) {
-                field.name = `custom_size[${bajuIndex}][]`;
-                field.value = '';
-                field.required = false;
             }
         });
-
-        // Reset custom size
-        ukuranTemplate.querySelector('.custom-size-input').style.display = 'none';
 
         ukuranContainer.appendChild(ukuranTemplate);
         disableMousewheelOnInputs();
@@ -488,11 +443,6 @@
                 const quantityInput = ukuranRow.querySelector('.quantity-input');
 
                 if (!sizeSelect.value || !quantityInput.value || parseInt(quantityInput.value) < 1) {
-                    isValid = false;
-                }
-
-                const isCustomSize = sizeSelect.options[sizeSelect.selectedIndex]?.getAttribute('data-is-custom') === 'true';
-                if (isCustomSize && !ukuranRow.querySelector('input[name^="custom_size"]').value.trim()) {
                     isValid = false;
                 }
             });
