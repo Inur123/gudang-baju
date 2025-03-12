@@ -62,8 +62,8 @@
     </div>
 
     <!-- Chart Section -->
-    <div class="bg-white rounded-xl shadow-lg border border-pink-200 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-gray-800 mb-4 text-center">Grafik Transaksi</h3>
+    <div class="bg-white rounded-xl shadow-lg border border-pink-100 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Grafik Transaksi</h3>
         <div class="h-80">
             <canvas id="transaction-chart"></canvas> <!-- Ini adalah tempat grafik akan dirender -->
         </div>
