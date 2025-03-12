@@ -28,8 +28,8 @@
 
                 </div>
                 <div class="hidden md:block">
-                    <p class="text-sm font-medium">{{ $user->name }}</p>
-                    <p class="text-xs text-gray-500">{{ $user->email }}</p>
+                    <p class="text-sm font-medium">{{ Auth::user()->name }}</p>
+                    <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
                 </div>
                 <i class="ri-arrow-down-s-line text-gray-500"></i>
             </div>

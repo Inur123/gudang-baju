@@ -14,8 +14,9 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        // Ambil transaksi dengan relasi details
+        // Ambil transaksi dengan relasi details, diurutkan dari yang terbaru
         $transactions = Transaction::with(['details.clothes', 'details.size'])
+            ->orderBy('created_at', 'desc') // Urutkan dari yang terbaru
             ->paginate(10); // Sesuaikan jumlah pagination
 
         // Hitung total barang dari semua transaksi
@@ -25,6 +26,7 @@ class TransactionController extends Controller
 
         return view('transactions.index', compact('transactions', 'totalItems'));
     }
+
 
 
 

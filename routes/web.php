@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ClothesSizeController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\TransactionReportController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -35,5 +36,5 @@ Route::resource('sizes', SizeController::class);
 // Route untuk transactions
 Route::resource('transactions', TransactionController::class);
 
-
+Route::resource('reports', TransactionReportController::class);
 
