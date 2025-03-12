@@ -10,4 +10,9 @@ class Clothes extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'label'];
+
+    public function transactionDetails()
+    {
+        return $this->hasMany(TransactionDetail::class);
+    }
 }

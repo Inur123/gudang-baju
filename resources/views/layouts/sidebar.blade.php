@@ -37,9 +37,10 @@
                 </a>
             </li>
             <li>
-                <a href="#"
-                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-gray-700 hover:bg-pink-50 transition-colors">
-                    <i class="ri-history-line text-indigo-500"></i>
+                <a href="{{ route('transactions.index') }}"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors
+                    {{ Request::is('transactions*') ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white font-medium shadow-lg scale-105' : 'text-gray-700 hover:bg-pink-50' }}">
+                    <i class="ri-history-line"></i>
                     Transactions
                 </a>
             </li>
@@ -99,9 +100,10 @@
             </li>
 
             <li>
-                <a href="#"
-                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-gray-700 hover:bg-pink-50 transition-colors">
-                    <i class="ri-history-line text-indigo-500"></i>
+                <a href="{{ route('transactions.index') }}"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-300
+                    {{ Request::is('transactions*') ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white font-medium shadow-lg scale-105' : 'text-gray-700 bg-transparent hover:bg-pink-50' }}">
+                    <i class="ri-history-line"></i>
                     Transactions
                 </a>
             </li>

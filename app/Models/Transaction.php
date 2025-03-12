@@ -5,22 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Size extends Model
+class Transaction extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'label',
-        'is_custom',
+        'description',
+        'type',
     ];
 
-    protected $casts = [
-        'is_custom' => 'boolean',
-    ];
-
-    public function transactionDetails()
+    // Relasi ke tabel transaction_details
+    public function details()
     {
         return $this->hasMany(TransactionDetail::class);
     }
+
 }
