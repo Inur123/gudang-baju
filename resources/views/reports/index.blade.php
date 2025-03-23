@@ -68,6 +68,28 @@
             <canvas id="transaction-chart"></canvas> <!-- Ini adalah tempat grafik akan dirender -->
         </div>
     </div>
+    <!-- Filter Section -->
+    <div class="bg-white rounded-xl shadow-sm border border-pink-100 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Filter Transaksi</h3>
+        <form action="{{ route('reports.index') }}" method="GET" class="flex space-x-4">
+            <div class="flex flex-col">
+                <label for="start_date" class="text-sm font-medium text-gray-700">Dari Tanggal</label>
+                <input type="date" name="start_date" id="start_date" value="{{ request('start_date') }}"
+                    class="mt-1 p-2 border border-gray-300 rounded-lg">
+            </div>
+            <div class="flex flex-col">
+                <label for="end_date" class="text-sm font-medium text-gray-700">Sampai Tanggal</label>
+                <input type="date" name="end_date" id="end_date" value="{{ request('end_date') }}"
+                    class="mt-1 p-2 border border-gray-300 rounded-lg">
+            </div>
+            <div class="flex items-end">
+                <button type="submit"
+                    class="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                    Filter
+                </button>
+            </div>
+        </form>
+    </div>
 
     <!-- Transactions Table -->
     <div class="bg-white rounded-xl shadow-sm border border-pink-100 p-6">
@@ -82,10 +104,7 @@
                     class="px-3 py-1.5 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                     <i class="ri-file-pdf-line mr-1"></i> Export PDF
                 </button>
-                <button id="print-report"
-                    class="px-3 py-1.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                    <i class="ri-printer-line mr-1"></i> Print
-                </button>
+
             </div>
         </div>
 
@@ -99,14 +118,12 @@
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal
                         </th>
                         <th scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipe
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipe</th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Deskripsi
                         </th>
                         <th scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Deskripsi</th>
-                        <th scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item
-                        </th>
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item</th>
                         <th scope="col"
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total
                             Kuantitas</th>
@@ -117,9 +134,8 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200" id="transactions-table-body">
                     @foreach ($transactions as $index => $transaction)
-                        <!-- Menambah variabel index untuk nomor urut -->
                         <tr>
-                            <td class="px-6 py-4 text-sm text-gray-500">{{ $index + 1 }}</td> <!-- Nomor urut -->
+                            <td class="px-6 py-4 text-sm text-gray-500">{{ $index + 1 }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500">
                                 {{ \Carbon\Carbon::parse($transaction->created_at)->translatedFormat('l, d F Y') }}
                             </td>
@@ -139,11 +155,14 @@
                                 @endforeach
                             </td>
                             <td class="px-6 py-4 text-sm text-gray-500">
-                                {{ $transaction->details->sum('quantity') }} <!-- Total quantity dari detail transaksi -->
+                                {{ $transaction->details->sum('quantity') }}
                             </td>
                             <td class="px-6 py-4 text-sm text-gray-500">
-                                <button class="text-blue-500 hover:underline">Edit</button>
-                                <button class="text-red-500 hover:underline">Hapus</button>
+                                <!-- Tombol Ekspor per Transaksi -->
+                                <a href="{{ route('reports.export.single', $transaction->id) }}?format=pdf"
+                                    class="px-2 py-1 bg-red-600 text-white text-xs font-medium rounded-lg hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 inline-flex items-center">
+                                    <i class="ri-file-pdf-line mr-1"></i> Export
+                                </a>
                             </td>
                         </tr>
                     @endforeach
@@ -292,13 +311,33 @@
                             callbacks: {
                                 label: function(tooltipItem) {
                                     return tooltipItem.dataset.label + ': ' + tooltipItem
-                                    .raw; // Custom tooltip format
+                                        .raw; // Custom tooltip format
                                 }
                             }
                         }
                     }
                 }
             });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle Export CSV
+            document.getElementById('export-csv').addEventListener('click', function() {
+                const startDate = document.getElementById('start_date').value;
+                const endDate = document.getElementById('end_date').value;
+                window.location.href =
+                    `/reports/export?format=csv&start_date=${startDate}&end_date=${endDate}`;
+            });
+
+            // Handle Export PDF
+            document.getElementById('export-pdf').addEventListener('click', function() {
+                const startDate = document.getElementById('start_date').value;
+                const endDate = document.getElementById('end_date').value;
+                window.location.href =
+                    `/reports/export?format=pdf&start_date=${startDate}&end_date=${endDate}`;
+            });
+
         });
     </script>
 @endsection

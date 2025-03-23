@@ -36,5 +36,10 @@ Route::resource('sizes', SizeController::class);
 // Route untuk transactions
 Route::resource('transactions', TransactionController::class);
 
-Route::resource('reports', TransactionReportController::class);
+Route::get('/reports', [TransactionReportController::class, 'index'])->name('reports.index');
+// routes/web.php
+Route::get('/reports/export', [TransactionReportController::class, 'export'])->name('reports.export');
+Route::get('/reports/{id}', [TransactionReportController::class, 'show'])->name('reports.show');
+// routes/web.php
+Route::get('/reports/export/{id}', [TransactionReportController::class, 'exportSingle'])->name('reports.export.single');
 
