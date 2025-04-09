@@ -38,11 +38,11 @@
                     <!-- Baris Baju -->
                     <div class="baju-row mb-6 p-4 border border-gray-200 rounded-lg">
                         <div class="mb-4">
-                            <label for="clothes_id" class="block text-sm font-medium text-gray-700 mb-2">Clothes</label>
+                            <label for="clothes_id" class="block text-sm font-medium text-gray-700 mb-2">Baju</label>
                             <select name="clothes_id[]"
                                 class="clothes-select w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
                                 required>
-                                <option value="">Select Clothes</option>
+                                <option value="">Select Baju</option>
                                 @foreach ($clothes as $clothe)
                                     <option value="{{ $clothe->id }}" data-label="{{ $clothe->label }}">
                                         {{ $clothe->name }}</option>
@@ -259,7 +259,7 @@ function updateAvailableClothes() {
 
     document.querySelectorAll('.clothes-select').forEach(select => {
         const currentValue = select.value;
-        select.innerHTML = '<option value="">Select Clothes</option>';
+        select.innerHTML = '<option value="">Select Baju</option>';
 
         allClothes.forEach(clothe => {
             if (!selectedClothes.includes(clothe.id.toString()) || clothe.id.toString() === currentValue) {
